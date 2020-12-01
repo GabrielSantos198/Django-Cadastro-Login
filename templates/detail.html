@@ -11,11 +11,15 @@
         <h2> {{ post.title  }}</h2>
         <p>{{ post.created_at }}</p>
         <p>{{ post.content  }}</p>
-        <a href="{% url 'novo' %}">Novo</a>
+
+        {% if user.is_authenticated %}
+             <a href="{% url 'novo' %}">Novo</a>
+        {% endif %}
+
         {% if user.is_authenticated and post.author == user and not hine_delete %}
             <a href="{% url 'deletar' post.slug %}">Deletar</a>          
+            <a href="{% url 'editar' post.slug %}">Editar</a>
         {% endif %}
-        <a href="{% url 'editar' post.slug %}">Editar</a>
     </article>
 </section>
 {% endblock %}

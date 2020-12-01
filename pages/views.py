@@ -45,10 +45,15 @@ class Deletar(DeleteView):
         return queryset.filter(author_id=self.request.user.id)
 
 
+@method_decorator(login_required, name="dispatch")
 class UpdatePageView(UpdateView):
     model = Post
     template_name ='editar.html'
-    fields = '__all__'
+    fields = ('title', 'summary', 'content')
     success_url = '/'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(author_id=self.request.user.id)
+        
 
